@@ -1,0 +1,27 @@
+<template>
+  <div class="goods">
+    <goods-list-item v-for="good in goods" :key="good.goodId" :good="good"/>
+  </div>
+</template>
+
+<script>
+import GoodsListItem from "@/components/goods/GoodsListItem";
+export default {
+  name: "GoodsList",
+  props: {
+    goods: {
+      type: Array,
+      default() {
+        return []
+      }
+    }
+  },
+  components: {
+    GoodsListItem
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

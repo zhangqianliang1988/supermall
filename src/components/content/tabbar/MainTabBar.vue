@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import TarBar from 'components/common/tabbar/TarBar'
-import TarBarItem from 'components/common/tabbar/TarBarItem'
+import TarBar from '@/components/common/tabbar/TarBar'
+import TarBarItem from '@/components/common/tabbar/TarBarItem'
 
 export default {
   name: 'MainTabBar',

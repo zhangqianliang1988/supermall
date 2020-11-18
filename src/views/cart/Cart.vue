@@ -1,13 +1,25 @@
 <template>
-  <h2>购物车</h2>
+  <div id="cart">
+    <nar-bar class="cart-nav">
+      <div slot="center">购物车</div>
+    </nar-bar>
+  </div>
 </template>
 
 <script>
+import NarBar from "@/components/common/navbar/NarBar";
+
 export default {
-  name: 'Cart'
+  name: 'Cart',
+  components: {
+    NarBar
+  }
 }
 </script>
 
 <style scoped>
-
+.cart-nav {
+  background-color: var(--color-tint);
+  color: #fff;
+}
 </style>
