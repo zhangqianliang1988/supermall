@@ -1,5 +1,5 @@
 <template>
-  <div class="goods">
+  <div class="goods-item">
     <img :src="good.img" alt="">
     <div class="goods-info">
       <p>{{good.title}}</p>
@@ -24,11 +24,12 @@ export default {
 </script>
 
 <style scoped>
-.goods {
+.goods-item {
   padding-bottom: 40px;
   position: relative;
+  width: 48%;
 }
-.goods img {
+.goods-item img {
   width: 100%;
 }
 

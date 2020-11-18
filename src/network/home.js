@@ -14,12 +14,12 @@ export function queryHomeMultiData() {
 
 export function queryGoods(type, page) {
   let mockData = Mock.mock({
-    'list|1-10': [{
-      'goodId|+1': 1,
-      'img': Mock.Random.image('200x300', '#FF5777', '#FFF', type),
-      'price': Mock.Random.float(10, 1000, 2, 2),
-      'cfav': Mock.Random.natural(10, 300),
-      'title': 'Mock.js'
+    'list|10': [{
+      'goodId|+1': page * 1000,
+      'img': '@dataImage("250x250", "求真像")',
+      'price': '@float(100, 500, 2, 2)',
+      'cfav|0-300': 10,
+      'title': '@ctitle(10, 20)'
     }],
     'page': page + 1
   })
