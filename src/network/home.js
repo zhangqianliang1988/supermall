@@ -1,5 +1,6 @@
 import {request} from "@/network/request";
-import Mock from 'mockjs'
+import {MOCK} from '@/common/const'
+import * as Mock from './mock'
 
 /**
  * 查询首页多种数据
@@ -13,21 +14,12 @@ export function queryHomeMultiData() {
 }
 
 export function queryGoods(type, page) {
-  let mockData = Mock.mock({
-    'list|10': [{
-      'goodId|+1': page * 1000,
-      'img': '@dataImage("250x250", "求真像")',
-      'price': '@float(100, 500, 2, 2)',
-      'cfav|0-300': 10,
-      'title': '@ctitle(10, 20)'
-    }],
-    'page': page + 1
-  })
-  return new Promise(resolve => resolve({data: mockData}))
-  /*
-  return request({
-    url: '/home/data',
-    params: {type, page}
-  })
-   */
+  if (MOCK) {
+    return Mock.mockHomeGoods(type, page)
+  } else {
+    return request({
+      url: '/home/data',
+      params: {type, page}
+    })
+  }
 }
