@@ -1,6 +1,6 @@
 <template>
   <div class="good-detail-nav-bar">
-    <nar-bar>
+    <nav-bar>
       <div slot="left" class="back" @click="backClick">
         <img src="~@/assets/images/common/back.svg">
       </div>
@@ -11,17 +11,17 @@
           {{ title }}
         </div>
       </div>
-    </nar-bar>
+    </nav-bar>
   </div>
 </template>
 
 <script>
-import NarBar from "@/components/common/navbar/NarBar";
+import NavBar from "@/components/common/navbar/NavBar";
 
 export default {
   name: "GoodDetailNavBar",
   components: {
-    NarBar
+    NavBar
   },
   data() {
     return {

@@ -1,18 +1,18 @@
 <template>
   <div id="profile">
-    <nar-bar class="profile-nav">
+    <nav-bar class="profile-nav">
       <div slot="center">我的</div>
-    </nar-bar>
+    </nav-bar>
   </div>
 </template>
 
 <script>
-import NarBar from "@/components/common/navbar/NarBar";
+import NavBar from "@/components/common/navbar/NavBar";
 
 export default {
   name: 'Profile',
   components: {
-    NarBar
+    NavBar
   }
 }
 </script>

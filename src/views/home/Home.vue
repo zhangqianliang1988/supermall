@@ -1,8 +1,8 @@
 <template>
   <div id="home">
-    <nar-bar class="home-nav">
+    <nav-bar class="home-nav">
       <div slot="center">购物街</div>
-    </nar-bar>
+    </nav-bar>
     <tab-control :titles="tabControlTitles" @tabClick="tabControlClick"
                  class="home-tab-control" ref="tabControlFixed" v-show="isTabControlFixed"/>
     <scroll class="home-content" :probe-type="3" :pull-up-load="true"
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import NarBar from "@/components/common/navbar/NarBar";
+import NavBar from "@/components/common/navbar/NavBar";
 import Scroll from "@/components/common/scroll/Scroll";
 
 import TabControl from "@/components/content/tabControl/TabControl";
@@ -37,7 +37,7 @@ import {debounce} from "@/common/utils";
 export default {
   name: 'Home',
   components: {
-    NarBar,
+    NavBar,
     Scroll,
     TabControl,
     BackTop,

@@ -1,18 +1,18 @@
 <template>
   <div id="cart">
-    <nar-bar class="cart-nav">
+    <nav-bar class="cart-nav">
       <div slot="center">购物车</div>
-    </nar-bar>
+    </nav-bar>
   </div>
 </template>
 
 <script>
-import NarBar from "@/components/common/navbar/NarBar";
+import NavBar from "@/components/common/navbar/NavBar";
 
 export default {
   name: 'Cart',
   components: {
-    NarBar
+    NavBar
   }
 }
 </script>

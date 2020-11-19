@@ -1,18 +1,18 @@
 <template>
   <div id="category">
-    <nar-bar class="category-nav">
+    <nav-bar class="category-nav">
       <div slot="center">分类</div>
-    </nar-bar>
+    </nav-bar>
   </div>
 </template>
 
 <script>
-import NarBar from "@/components/common/navbar/NarBar";
+import NavBar from "@/components/common/navbar/NavBar";
 
 export default {
   name: 'Category',
   components: {
-    NarBar
+    NavBar
   }
 }
 </script>
