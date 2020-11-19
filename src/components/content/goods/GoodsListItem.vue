@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item">
-    <img :src="good.img" alt="" @load="goodImageLoaded">
+    <img :src="good.img" alt="" @load="goodImageLoaded" @click="goodClick(good.goodId)">
     <div class="goods-info">
       <p>{{good.title}}</p>
       <span class="price">{{good.price}}</span>
@@ -23,6 +23,9 @@ export default {
   methods: {
     goodImageLoaded() {
       this.$bus.$emit('goodImageLoaded')
+    },
+    goodClick(goodId) {
+      this.$router.push('/good-detail/' + goodId)
     }
   }
 }

@@ -7,6 +7,7 @@ const Home = () => import('@/views/home/Home')
 const Category = () => import('@/views/category/Category')
 const Cart = () => import('@/views/cart/Cart')
 const Profile = () => import('@/views/profile/Profile')
+const GoodDetail = () => import('@/views/detail/GoodDetail')
 
 const routes = [
   {
@@ -32,6 +33,11 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: Profile
+  },
+  {
+    path: '/good-detail/:goodId',
+    name: 'GoodDetail',
+    component: GoodDetail
   }
 ]
 

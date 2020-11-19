@@ -17,3 +17,15 @@ export function mockHomeGoods(type, page) {
     }, 300)
   })
 }
+
+export function mockGoodDetail(goodId) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      let mockData = Mock.mock({
+        'goodId': goodId,
+        'topImages|2-4': ['@dataImage("750x400", "商品介绍图片")']
+      })
+      resolve(mockData)
+    }, 200)
+  })
+}
