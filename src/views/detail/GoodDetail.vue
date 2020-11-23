@@ -1,37 +1,155 @@
 <template>
   <div id="good-detail">
-    <good-detail-nav-bar/>
-    <good-detail-swiper :top-images="topImages"/>
+    <good-detail-nav-bar @titleClick="navTitleClick" :current-index="navCurrentIndex"/>
+    <scroll class="good-detail-scroll" ref="scroll"
+            @scroll="contentScroll" :probe-type="3">
+      <good-detail-swiper ref="base" :top-images="topImages" @swiperImageLoaded="swiperImageLoaded"/>
+      <good-detail-base-info :good="good"/>
+      <good-detail-shop-info :shop="shop"/>
+      <good-detail-info :detail-info="detailInfo" @imageLoaded="goodDetailImageLoaded"/>
+      <good-detail-param-info ref="param" :param-info="paramInfo"/>
+      <good-detail-comment-info ref="comment" :comment-info="commentInfo"/>
+      <good-detail-recommend-info ref="recommend" :recommend-list="recommendList"/>
+    </scroll>
+    <back-top @backTop="backTop" v-show="isShowBackTop"></back-top>
   </div>
 </template>
 
 <script>
 import GoodDetailNavBar from "./childComps/GoodDetailNavBar";
-import GoodDetailSwiper from "@/views/detail/childComps/GoodDetailSwiper";
+import GoodDetailSwiper from "./childComps/GoodDetailSwiper";
+import GoodDetailBaseInfo from "./childComps/GoodDetailBaseInfo";
+import GoodDetailShopInfo from "./childComps/GoodDetailShopInfo";
+import GoodDetailInfo from "./childComps/GoodDetailInfo";
+import GoodDetailParamInfo from "./childComps/GoodDetailParamInfo";
+import GoodDetailCommentInfo from "./childComps/GoodDetailCommentInfo";
+import GoodDetailRecommendInfo from "./childComps/GoodDetailRecommendInfo";
+
+import Scroll from "@/components/common/scroll/Scroll";
+import BackTop from "@/components/content/backTop/BackTop";
 
 import * as request from "@/network/good-detail"
+import {debounce} from "@/common/utils";
+import {backTopMixin} from "@/common/mixin"
+import {BACKTOP} from "@/common/const"
 
 export default {
   name: "GoodDetail",
   components: {
     GoodDetailNavBar,
-    GoodDetailSwiper
+    GoodDetailSwiper,
+    GoodDetailBaseInfo,
+    GoodDetailShopInfo,
+    GoodDetailInfo,
+    GoodDetailParamInfo,
+    GoodDetailCommentInfo,
+    GoodDetailRecommendInfo,
+    Scroll,
+    BackTop
   },
   data() {
     return {
       goodId: null,
-      topImages: []
+      topImages: [],
+      good: {},
+      paramInfo: {},
+      shop: {},
+      detailInfo: {},
+      commentInfo: {},
+      recommendList: [],
+      navThemeTops: [],
+      navCurrentIndex: 0
     }
   },
+  mixins: [backTopMixin],
   created() {
-    this.goodId = this.$route.params.goodId
-    request.queryGoodDetail(this.goodId).then(res => {
-      this.topImages = res.topImages
+    this._getGoodDetailData()
+    this._getRecommendData()
+  },
+  mounted() {
+    // 1. 推荐商品图片加载完成
+    const invokeScrollRefresh = debounce(this.$refs.scroll.refresh, 500)
+    this.$bus.$on('goodImageLoaded', () => {
+      invokeScrollRefresh()
     })
+  },
+  updated() {
+    this._getOffsetTops()
+  },
+  methods: {
+    _getGoodDetailData() {
+      this.goodId = this.$route.params.goodId
+      request.queryGoodDetail(this.goodId).then(res => {
+        const data = res.result
+        // 1. 获取顶部轮播图片数据
+        this.topImages = res.topImages
+        // 2. 获取商品描述数据
+        this.good = new request.Good(data.itemInfo, data.columns, data.shopInfo.services)
+        // 3. 获取店铺数据
+        this.shop = new request.Shop(data.shopInfo)
+        // 4. 获取商品图片数据
+        this.detailInfo = data.detailInfo
+        // 5. 获取商品参数数据
+        this.paramInfo = new request.GoodParam(data.itemParams.info, data.itemParams.rule)
+        // 6. 获取商品用户评价数据
+        if (data.rate && data.rate.list) {
+          this.commentInfo = data.rate.list[0];
+        }
+      })
+    },
+    _getRecommendData() {
+      request.getRecommend().then((res, error) => {
+        if (error) return
+        this.recommendList = res.data.list
+      })
+    },
+    _getOffsetTops() {
+      this.navThemeTops = []
+      this.navThemeTops.push(this.$refs.base.$el.offsetTop)
+      this.navThemeTops.push(this.$refs.param.$el.offsetTop)
+      this.navThemeTops.push(this.$refs.comment.$el.offsetTop)
+      this.navThemeTops.push(this.$refs.recommend.$el.offsetTop)
+      this.navThemeTops.push(Number.MAX_VALUE)
+    },
+    swiperImageLoaded() {
+      this.$refs.scroll.refresh()
+    },
+    goodDetailImageLoaded() {
+      this.$refs.scroll.refresh()
+    },
+    contentScroll(position) {
+      const y = Math.abs(position.y)
+      // 1、显示返回顶部按钮
+      this.isShowBackTop = y > BACKTOP
+      // 2、切换头部主题
+      let length = this.navThemeTops.length;
+      for (let index = 0; index < length; index++) {
+        if (y >= this.navThemeTops[index] && y < this.navThemeTops[index + 1]) {
+          if (this.navCurrentIndex !== index) {
+            this.navCurrentIndex = index;
+          }
+          break;
+        }
+      }
+    },
+    navTitleClick(index) {
+      this.navCurrentIndex = index
+      this.$refs.scroll.scrollTo(0, -this.navThemeTops[index])
+    }
   }
 }
 </script>
 
 <style scoped>
+#good-detail {
+  position: relative;
+  z-index: 9;
+  background-color: #fff;
+  height: 100vh;
+}
 
+.good-detail-scroll {
+  height: calc(100% - 44px);
+  overflow: hidden;
+}
 </style>

@@ -14,7 +14,7 @@
       <tab-control :titles="tabControlTitles" @tabClick="tabControlClick" ref="tabControl"/>
       <goods-list :goods="showGoods"/>
     </scroll>
-    <back-top @click.native="backTopClick" v-show="isShowBackTop"/>
+    <back-top @backTop="backTop" v-show="isShowBackTop"/>
   </div>
 </template>
 
@@ -33,6 +33,7 @@ import HomeFeature from "./childComps/HomeFeature";
 import * as request from "@/network/home"
 import {NEW, POP, SELL, BACKTOP} from "@/common/const";
 import {debounce} from "@/common/utils";
+import {backTopMixin} from "@/common/mixin"
 
 export default {
   name: 'Home',
@@ -59,10 +60,10 @@ export default {
         sell: {page: 0, list: []},
       },
       currentGoodsType: POP,
-      isShowBackTop: false,
       scrollY: 0
     }
   },
+  mixins: [backTopMixin],
   created() {
     // 1. 查询多种数据
     this.queryHomeMultiData()
@@ -119,9 +120,6 @@ export default {
       }
       this.$refs.tabControlFixed.currentIndex = tabIndex
       this.$refs.tabControl.currentIndex = tabIndex
-    },
-    backTopClick() {
-      this.$refs.scroll.scrollTo(0, 0)
     },
     contentScroll(position) {
       let top = Math.abs(position.y)
