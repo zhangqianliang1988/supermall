@@ -1,4 +1,4 @@
-export const BACKTOP = 1000;
+export const BACK_TOP = 1000;
 
 export const POP = 'pop';
 export const NEW = 'new';

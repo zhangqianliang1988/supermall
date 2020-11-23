@@ -35,7 +35,7 @@ const routes = [
     component: Profile
   },
   {
-    path: '/good-detail/:goodId',
+    path: '/good-detail',
     name: 'GoodDetail',
     component: GoodDetail
   }

@@ -31,7 +31,7 @@ export function mockGoodDetail(goodId) {
             'price': '￥@float(80, 130, 2, 2)',
             'oldPrice': '￥@float(140, 190, 2, 2)',
             'discountDesc': '新品上市',
-            'highNowPrice': '￥@float(200, 250, 2, 2)'
+            'highNowPrice': '@float(200, 250, 2, 2)'
           },
           'itemParams': {
             'info': {
@@ -112,7 +112,7 @@ export function mockGoodDetail(goodId) {
                   'uname': '@cname()',
                 },
                 'content': '@cparagraph(4, 8)',
-                'created': '@datetime()',
+                'created': '@date()',
                 'style': '@ctitle(4)',
                 'images|2-5': ['@dataImage("750x400", "用户评价图片")']
               }

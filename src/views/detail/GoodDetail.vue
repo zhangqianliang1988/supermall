@@ -12,6 +12,7 @@
       <good-detail-recommend-info ref="recommend" :recommend-list="recommendList"/>
     </scroll>
     <back-top @backTop="backTop" v-show="isShowBackTop"></back-top>
+    <good-detail-bottom-bar @addToCart="addToCart"/>
   </div>
 </template>
 
@@ -24,14 +25,14 @@ import GoodDetailInfo from "./childComps/GoodDetailInfo";
 import GoodDetailParamInfo from "./childComps/GoodDetailParamInfo";
 import GoodDetailCommentInfo from "./childComps/GoodDetailCommentInfo";
 import GoodDetailRecommendInfo from "./childComps/GoodDetailRecommendInfo";
+import GoodDetailBottomBar from "@/views/detail/childComps/GoodDetailBottomBar";
 
 import Scroll from "@/components/common/scroll/Scroll";
 import BackTop from "@/components/content/backTop/BackTop";
 
 import * as request from "@/network/good-detail"
-import {debounce} from "@/common/utils";
-import {backTopMixin} from "@/common/mixin"
-import {BACKTOP} from "@/common/const"
+import {backTopMixin, goodImageLoadedMixin} from "@/common/mixin"
+import {BACK_TOP} from "@/common/const"
 
 export default {
   name: "GoodDetail",
@@ -45,7 +46,8 @@ export default {
     GoodDetailCommentInfo,
     GoodDetailRecommendInfo,
     Scroll,
-    BackTop
+    BackTop,
+    GoodDetailBottomBar
   },
   data() {
     return {
@@ -61,24 +63,20 @@ export default {
       navCurrentIndex: 0
     }
   },
-  mixins: [backTopMixin],
+  mixins: [backTopMixin, goodImageLoadedMixin],
   created() {
     this._getGoodDetailData()
     this._getRecommendData()
   },
-  mounted() {
-    // 1. 推荐商品图片加载完成
-    const invokeScrollRefresh = debounce(this.$refs.scroll.refresh, 500)
-    this.$bus.$on('goodImageLoaded', () => {
-      invokeScrollRefresh()
-    })
+  destroyed() {
+    this.$bus.$off('goodImageLoaded', this.goodImageLoaded)
   },
   updated() {
     this._getOffsetTops()
   },
   methods: {
     _getGoodDetailData() {
-      this.goodId = this.$route.params.goodId
+      this.goodId = this.$route.query.goodId
       request.queryGoodDetail(this.goodId).then(res => {
         const data = res.result
         // 1. 获取顶部轮播图片数据
@@ -120,7 +118,7 @@ export default {
     contentScroll(position) {
       const y = Math.abs(position.y)
       // 1、显示返回顶部按钮
-      this.isShowBackTop = y > BACKTOP
+      this.isShowBackTop = y > BACK_TOP
       // 2、切换头部主题
       let length = this.navThemeTops.length;
       for (let index = 0; index < length; index++) {
@@ -135,6 +133,25 @@ export default {
     navTitleClick(index) {
       this.navCurrentIndex = index
       this.$refs.scroll.scrollTo(0, -this.navThemeTops[index])
+    },
+    addToCart() {
+      const product = {}
+      product.goodId = this.goodId
+      product.image = this.topImages[0]
+      product.title = this.good.title
+      product.desc = this.good.desc
+      product.price = this.good.nowPrice
+      this.$store.dispatch('addCart', product)
+    }
+  },
+  watch: {
+    '$route'(to, from) {
+      if (to.query.goodId !== from.query.goodId) {
+        this.goodId = to.query.goodId
+        this._getGoodDetailData()
+        this._getRecommendData()
+        this.$refs.scroll.scrollTo(0, 0, 0)
+      }
     }
   }
 }
@@ -149,7 +166,7 @@ export default {
 }
 
 .good-detail-scroll {
-  height: calc(100% - 44px);
+  height: calc(100% - 44px - 49px);
   overflow: hidden;
 }
 </style>

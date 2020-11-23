@@ -31,9 +31,8 @@ import HomeRecommend from "./childComps/HomeRecommend";
 import HomeFeature from "./childComps/HomeFeature";
 
 import * as request from "@/network/home"
-import {NEW, POP, SELL, BACKTOP} from "@/common/const";
-import {debounce} from "@/common/utils";
-import {backTopMixin} from "@/common/mixin"
+import {NEW, POP, SELL, BACK_TOP} from "@/common/const";
+import {backTopMixin, goodImageLoadedMixin} from "@/common/mixin"
 
 export default {
   name: 'Home',
@@ -63,7 +62,7 @@ export default {
       scrollY: 0
     }
   },
-  mixins: [backTopMixin],
+  mixins: [backTopMixin, goodImageLoadedMixin],
   created() {
     // 1. 查询多种数据
     this.queryHomeMultiData()
@@ -72,19 +71,14 @@ export default {
     this.queryHomeGoods(NEW)
     this.queryHomeGoods(SELL)
   },
-  mounted() {
-    // 1. 监听商品图片加载完成
-    const invokeScrollRefresh = debounce(this.$refs.scroll.refresh, 500)
-    this.$bus.$on('goodImageLoaded', () => {
-      invokeScrollRefresh()
-    })
-  },
   deactivated() {
     this.scrollY = this.$refs.scroll.getScrollY()
+    this.$bus.$off('goodImageLoaded', this.goodImageLoaded)
   },
   activated() {
     this.$refs.scroll.refresh()
     this.$refs.scroll.scrollTo(0, this.scrollY, 1)
+    this.$bus.$on('goodImageLoaded', this.goodImageLoaded)
   },
   computed: {
     showGoods() {
@@ -123,7 +117,7 @@ export default {
     },
     contentScroll(position) {
       let top = Math.abs(position.y)
-      this.isShowBackTop = top > BACKTOP
+      this.isShowBackTop = top > BACK_TOP
       this.isTabControlFixed = top > this.tabControlOffsetTop
     },
     loadMoreGoods() {
