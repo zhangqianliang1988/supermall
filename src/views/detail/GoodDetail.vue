@@ -34,6 +34,8 @@ import * as request from "@/network/good-detail"
 import {backTopMixin, goodImageLoadedMixin} from "@/common/mixin"
 import {BACK_TOP} from "@/common/const"
 
+import {mapActions} from 'vuex'
+
 export default {
   name: "GoodDetail",
   components: {
@@ -45,9 +47,9 @@ export default {
     GoodDetailParamInfo,
     GoodDetailCommentInfo,
     GoodDetailRecommendInfo,
+    GoodDetailBottomBar,
     Scroll,
-    BackTop,
-    GoodDetailBottomBar
+    BackTop
   },
   data() {
     return {
@@ -75,6 +77,7 @@ export default {
     this._getOffsetTops()
   },
   methods: {
+    ...mapActions(['addCart']),
     _getGoodDetailData() {
       this.goodId = this.$route.query.goodId
       request.queryGoodDetail(this.goodId).then(res => {
@@ -141,7 +144,7 @@ export default {
       product.title = this.good.title
       product.desc = this.good.desc
       product.price = this.good.nowPrice
-      this.$store.dispatch('addCart', product)
+      this.addCart(product).then(result => this.$toast.show(result))
     }
   },
   watch: {
