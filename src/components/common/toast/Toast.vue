@@ -36,5 +36,6 @@ export default {
   color: #fff;
   background-color: rgba(0, 0, 0, 0.75);
   z-index: 999;
+  font-size: 12px;
 }
 </style>

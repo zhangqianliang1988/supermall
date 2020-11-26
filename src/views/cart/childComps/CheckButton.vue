@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div class="icon-selector" :class="{'selector-active': checked}" @click="selectItem">
-      <img src="@/assets/images/cart/tick.svg" alt="">
-    </div>
+    <div class="iconfont" :class="checkClass" @click="selectItem"></div>
   </div>
 </template>
 
@@ -25,6 +23,11 @@ export default {
       this.$emit('checkBtnClick')
     }
   },
+  computed: {
+    checkClass() {
+      return this.checked ? 'icon-checked' : 'icon-unchecked'
+    }
+  },
   watch: {
     value: function (newValue) {
       this.checked = newValue;
@@ -34,18 +37,15 @@ export default {
 </script>
 
 <style scoped>
-.icon-selector {
-  position: relative;
-  margin: 0;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 2px solid #ccc;
-  cursor: pointer;
+.iconfont {
+  font-size: 20px;
 }
 
-.selector-active {
-  background-color: #ff8198;
-  border-color: #ff8198;
+.icon-unchecked {
+  color: #ccc;
+}
+
+.icon-checked {
+  color: #ff8198;
 }
 </style>

@@ -72,6 +72,7 @@ export default {
 .check-wrapper {
   width: 80px;
   display: flex;
+  align-items: center;
 }
 
 .total-price {

@@ -43,7 +43,8 @@ export default {
 }
 
 .info-title {
-  color: #222
+  color: #222;
+  font-size: 14px;
 }
 
 .info-price {

@@ -2,7 +2,7 @@
   <div class="good-detail-nav-bar">
     <nav-bar>
       <div slot="left" class="back" @click="backClick">
-        <img src="~@/assets/images/common/back.svg">
+        <i class="iconfont icon-back"></i>
       </div>
       <div slot="center" class="title">
         <div v-for="(title, index) in titles"
@@ -49,7 +49,10 @@ export default {
 <style scoped>
 .back {
   text-align: center;
-  padding-top: 7px;
+}
+
+.back .iconfont {
+  font-size: 30px;
 }
 
 .title {

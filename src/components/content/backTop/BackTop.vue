@@ -1,6 +1,6 @@
 <template>
   <div class="back-top" @click="topClick">
-    <img src="~@/assets/images/common/top.png">
+    <span class="iconfont icon-back-top"></span>
   </div>
 </template>
 
@@ -19,11 +19,15 @@ export default {
 .back-top {
   position: fixed;
   right: 10px;
-  bottom: 50px;
+  bottom: 60px;
 }
 
-.back-top img {
-  width: 40px;
-  height: 40px;
+.back-top .iconfont {
+  font-size: 20px;
+  color: #FF3030;
+  border-radius: 50%;
+  background-color: #FEFEFE;
+  padding: 5px;
+  box-shadow: 1px 1px 5px #888;
 }
 </style>

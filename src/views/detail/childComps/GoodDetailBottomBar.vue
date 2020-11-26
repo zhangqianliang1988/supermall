@@ -2,15 +2,15 @@
   <div class="bottom-bar">
     <div class="bar-item bar-left">
       <div>
-        <i class="icon service"></i>
+        <i class="iconfont icon-service"></i>
         <span class="text">客服</span>
       </div>
       <div>
-        <i class="icon shop"></i>
+        <i class="iconfont icon-shop"></i>
         <span class="text">店铺</span>
       </div>
       <div>
-        <i class="icon select"></i>
+        <i class="iconfont icon-favorites"></i>
         <span class="text">收藏</span>
       </div>
     </div>
@@ -48,6 +48,7 @@ export default {
 .bar-item {
   flex: 1;
   display: flex;
+  align-items: center;
 }
 
 .bar-item>div {
@@ -58,20 +59,9 @@ export default {
   font-size: 13px;
 }
 
-.bar-left .icon {
+.bar-left .iconfont {
   display: block;
-  width: 22px;
-  height: 22px;
-  margin: 4px auto 3px;
-  background: url("~@/assets/images/detail/detail_bottom.png") 0 0/100%;
-}
-
-.bar-left .service {
-  background-position:0 -54px;
-}
-
-.bar-left .shop {
-  background-position:0 -98px;
+  font-size: 24px;
 }
 
 .bar-right {

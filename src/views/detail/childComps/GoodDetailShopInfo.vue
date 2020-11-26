@@ -78,6 +78,7 @@ export default {
 .shop-top .title {
   margin-left: 10px;
   vertical-align: center;
+  font-size: 14px;
 }
 
 .shop-middle {
