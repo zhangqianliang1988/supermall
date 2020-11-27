@@ -36,5 +36,5 @@ export default {
 
 <style>
 @import "~@/assets/css/base.css";
-@import "~@/assets/css/iconfont/iconfont.css";
+@import "https://at.alicdn.com/t/font_2198072_pkrmf6sxo6.css";
 </style>

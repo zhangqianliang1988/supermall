@@ -45,7 +45,4 @@ export default {
 </script>
 
 <style scoped>
-.swiper img {
-  width: 100%;
-}
 </style>

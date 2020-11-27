@@ -64,3 +64,6 @@ a {
   float: right;
 }
 
+.swiper img {
+  width: 100%;
+}
