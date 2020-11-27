@@ -1,19 +1,23 @@
 <template>
-  <swiper class="good-detail-swiper">
-    <swiper-item v-for="(image, index) in topImages" :key="index">
+  <swiper class="swiper" :options="swiperOption">
+    <swiper-slide v-for="(image, index) in topImages" :key="index">
       <img :src="image" alt="" @load="swiperImageLoaded">
-    </swiper-item>
+    </swiper-slide>
+    <div class="swiper-pagination" slot="pagination"></div>
   </swiper>
 </template>
 
 <script>
-import {Swiper, SwiperItem} from "@/components/common/swiper";
+import {Swiper, SwiperSlide} from 'vue-awesome-swiper'
+import 'swiper/css/swiper.css'
+
+import {swiperOption} from "@/common/const";
 
 export default {
   name: "GoodDetailSwiper",
   components: {
     Swiper,
-    SwiperItem
+    SwiperSlide
   },
   props: {
     topImages: {
@@ -25,7 +29,8 @@ export default {
   },
   data() {
     return {
-      isImageLoaded: false
+      isImageLoaded: false,
+      swiperOption
     }
   },
   methods: {
@@ -40,4 +45,7 @@ export default {
 </script>
 
 <style scoped>
+.swiper img {
+  width: 100%;
+}
 </style>

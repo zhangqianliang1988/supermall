@@ -18,7 +18,7 @@ Vue.use(toast)
 
 // 图片懒加载
 Vue.use(VueLazyload, {
-  loading: require('@/assets/images/common/loading.png')
+  loading: require('@/assets/images/common/placeholder.png')
 })
 
 // 解决移动端点击延迟300毫秒的问题

@@ -10,9 +10,27 @@
 <script>
 import MainTabBar from "@/components/content/tabbar/MainTabBar"
 
+import {STORE} from "@/common/const";
+
 export default {
   name: 'App',
-  components: {MainTabBar}
+  components: {MainTabBar},
+  created() {
+    let store = sessionStorage.getItem(STORE)
+    if (store) {
+      this.$store.replaceState(
+        Object.assign(
+          {},
+          this.$store.state,
+          JSON.parse(store)
+        )
+      )
+    }
+
+    window.addEventListener('beforeunload', () => {
+      sessionStorage.setItem(STORE, JSON.stringify(this.$store.state))
+    })
+  }
 }
 </script>
 

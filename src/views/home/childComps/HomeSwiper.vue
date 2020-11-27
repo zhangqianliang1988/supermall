@@ -1,15 +1,19 @@
 <template>
-  <swiper>
-    <swiper-item v-for="(banner, index) in banners" :key="index">
+  <swiper class="swiper" :options="swiperOption">
+    <swiper-slide v-for="(banner, index) in banners" :key="index">
       <a :href="banner.link">
         <img :src="banner.image" alt="banner.title" @load="bannerImageLoaded">
       </a>
-    </swiper-item>
+    </swiper-slide>
+    <div class="swiper-pagination" slot="pagination"></div>
   </swiper>
 </template>
 
 <script>
-import {Swiper, SwiperItem} from "@/components/common/swiper";
+import {Swiper, SwiperSlide} from 'vue-awesome-swiper'
+import 'swiper/css/swiper.css'
+
+import {swiperOption} from "@/common/const";
 
 export default {
   name: "HomeSwiper",
@@ -23,12 +27,13 @@ export default {
   },
   data() {
     return {
-      isImageLoaded: false
+      isImageLoaded: false,
+      swiperOption
     }
   },
   components: {
     Swiper,
-    SwiperItem
+    SwiperSlide
   },
   methods: {
     bannerImageLoaded() {
@@ -42,5 +47,7 @@ export default {
 </script>
 
 <style scoped>
-
+.swiper img {
+  width: 100%;
+}
 </style>
