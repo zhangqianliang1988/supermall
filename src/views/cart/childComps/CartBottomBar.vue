@@ -88,7 +88,7 @@ export default {
 
 .calculate {
   width: 100px;
-  background-color: red;
+  background-color: var(--color-high-text);
   text-align: center;
   color: #fff;
   line-height: 40px;

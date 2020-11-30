@@ -1,5 +1,5 @@
 <template>
-  <div class="shop-info">
+  <div class="shop-info" v-if="Object.keys(shop).length !== 0">
     <div class="shop-top">
       <img v-lazy="shop.logo" alt="">
       <span class="title">{{ shop.name }}</span>
@@ -48,7 +48,9 @@ export default {
   },
   filters: {
     sellCountFilter: function (value) {
-      if (value < 10000) return value;
+      if (value < 10000) {
+        return value;
+      }
       return (value / 10000).toFixed(1) + '万'
     }
   }

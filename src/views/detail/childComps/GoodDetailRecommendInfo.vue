@@ -1,5 +1,5 @@
 <template>
-  <div class="recommend-info">
+  <div class="recommend-info" v-if="Object.keys(recommendList).length !== 0">
     <div class="info-header">热门推荐</div>
 <!--    <grid-view>-->
 <!--      <goods-list-item v-for="(item, index) in recommendList" :key="index" :good="item"></goods-list-item>-->

@@ -67,3 +67,8 @@ a {
 .swiper img {
   width: 100%;
 }
+
+.swiper .swiper-pagination-bullet-active {
+  opacity: 1;
+  background: var(--swiper-pagination-color, var(--color-high-text));
+}

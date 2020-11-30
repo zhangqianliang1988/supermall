@@ -1,7 +1,7 @@
 <template>
   <div id="category">
     <nav-bar class="category-nav">
-      <div slot="center">分类</div>
+      <div slot="center">商品分类</div>
     </nav-bar>
   </div>
 </template>
